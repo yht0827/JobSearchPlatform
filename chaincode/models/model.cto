@@ -1,0 +1,107 @@
+/*
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+namespace org.example.empty
+
+event TransEvent {
+}
+
+enum CertificateState {
+o INIT // (자격증 초기등록 매칭 x)
+o MATCHED // (회원과 자격증이 매칭했을 시)
+o EXPIRED // (토익 만료)
+o APPROVED // (기업 요청 가능)
+o REJECTED // (기업 요청 거부)
+}
+
+concept Certificate{
+o DateTime passDate // (취득일자)
+o CertificateState state default="INIT" // (상태정보)
+o String name
+--> PlatForm include
+--> Employee owner
+}
+
+asset Toeic identified by toeicId {
+o String toeicId // (자격번호)
+o Double totalScore // (토익점수)
+o DateTime validUntil // (유효기간)
+o Certificate certificate
+}
+
+asset Gisa identified by gId {
+o String gId // (자격번호)
+o String registName // (자격종목)
+o Certificate certificate
+}
+
+/**
+- participant
+*/
+  
+participant Employee identified by email {
+o String email // (플랫폼 ID)
+o String password
+o String name
+o DateTime birth // (생년월일)
+o String active default="unAuth" // 이메일 인증 하지 않은 초기 상태
+--> PlatForm platform
+}
+
+abstract participant Institution identified by insId {
+o String insId // 기관 번호
+o String insName // 기관 이름
+}
+
+participant PlatForm extends Institution{}
+
+/**
+- Transactions performed on network
+*/
+
+transaction SignUp { // (구직자 등록)
+o Employee employee
+--> PlatForm platform // platform id
+}
+
+transaction SignIn { // (플랫폼 로그인)
+o String email // (플랫폼 ID)
+o String password
+--> Employee employee
+}
+
+transaction ToeicRegister { // (토익 점수 등록)
+o Toeic toeic // (토익)
+}
+
+transaction ToeicSearch { // (토익 점수 조회)
+o String name
+}
+
+transaction ToeicExpired{ // (토익 만료)
+}
+  
+transaction GisaRegister{ // (기사 정보 등록)
+o Gisa gisa // (기사)
+}
+
+transaction GisaSearch{ // (기사 정보 조회)
+o String name
+--> Gisa gisa
+}
+
+transaction RequsetInfo{ // (기업 요청 처리)
+o String email
+--> Employee employee
+}
