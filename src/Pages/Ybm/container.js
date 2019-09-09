@@ -1,6 +1,6 @@
-import React from "react";
+import { compose, withState } from "recompose";
 import Ybm from "./presenter";
 
-const Container = () => <Ybm />;
-
-export default Container;
+export default compose(
+    withState("action", "changeAction", "search"),
+)(Ybm);

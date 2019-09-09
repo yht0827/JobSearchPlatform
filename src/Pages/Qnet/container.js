@@ -1,6 +1,6 @@
-import React from "react";
+import { compose, withState } from "recompose";
 import Qnet from "./presenter";
 
-const Container = () => <Qnet />;
-
-export default Container;
+export default compose(
+    withState("action", "changeAction", "search"),
+)(Qnet);

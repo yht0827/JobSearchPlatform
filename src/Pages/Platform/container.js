@@ -1,6 +1,9 @@
-import React from "react";
+import { compose, withState } from "recompose";
+import { connect } from "react-redux";
 import Platform from "./presenter";
 
-const Container = () => <Platform />;
-
-export default Container;
+export default compose(
+    connect((state) => ({ visible: state.auth.getIn(["header", "visible"]) })),
+    withState("isLogged", "changeLog", true),
+    withState("action", "changeAction", "main"),
+)(Platform);

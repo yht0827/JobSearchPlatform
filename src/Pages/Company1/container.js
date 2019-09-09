@@ -1,6 +1,8 @@
-import React from "react";
+import { compose } from "recompose";
+import { WithStepChange, WithLoader } from "Components/With";
 import Company1 from "./presenter";
 
-const Container = () => <Company1 />;
-
-export default Container;
+export default compose(
+    WithStepChange,
+    WithLoader,
+)(Company1);
