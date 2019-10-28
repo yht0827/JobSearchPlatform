@@ -7,18 +7,18 @@ import { PlatformTemPlate, CompanyList } from "Components/Platform";
 import { pageDesc } from "lib/Data";
 import oc from "open-color";
 
-const Platform = ({ visible, isLogged, changeAction, action }) => (
+const Platform = ({ visible, isLogged, ChangeAction,ChangeState,action, LogOutAction }) => (
     <>
         { 
             visible === true
-                ? <Header title="Platform" onClick={() => changeAction("main")} link="/platform" bg="white" fg={oc.teal[7]} gr1={oc.teal[6]} gr2={oc.cyan[5]}>
-                    { isLogged === false
-                        ? (action === "main" && <> <MenuLabel changeAction={changeAction} action="profile" labelcolor="teal" iconname="user circle" labeltext="프로필　" /> <MenuLabel labelcolor="red" iconname="log out" labeltext="로그아웃" /> </>)
+                ? <Header title="Work Korea" onClick={() => ChangeState()} link="/platform" bg="white" fg={oc.teal[7]} gr1={oc.teal[6]} gr2={oc.cyan[5]}>
+                    { isLogged
+                        ? (action === "main" && <> <MenuLabel ChangeAction={ChangeAction} action="profile" labelcolor="teal" iconname="user circle" labeltext="프로필　" /> <MenuLabel dir="#" LogOutAction={LogOutAction} labelcolor="red" iconname="log out" labeltext="로그아웃" /> </>)
                         : <MenuLabel dir="/auth" labelcolor="teal" iconname="sign-in" labeltext="로그인" /> }
                 </Header> : null
         }
         <Section>
-            { isLogged === false ? (action === "profile" ? <FormWrapper bg={oc.green[4]} BoxWid="800px" BoxHei="700px" LogoName="Profile"><PlatformTemPlate /></FormWrapper> : <CompanyList />) : <MainForm pageDesc={pageDesc[2]} color="green" /> }
+            { isLogged ? (action === "profile" ? <FormWrapper bg={oc.green[4]} BoxWid="800px" BoxHei="700px" LogoName="Profile"><PlatformTemPlate /></FormWrapper> : <CompanyList />) : <MainForm pageDesc={pageDesc[2]} color="green" /> }
         </Section> 
     </>
 );

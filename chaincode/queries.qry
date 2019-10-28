@@ -1,35 +1,55 @@
 /**
  * Gisa
  */
-query Get_ALL_Gisa {
-description: "Select Gisa"
+
+query Get_Searched_All_Gisa_Count {
+description: "Select searched All Gisa"
 statement:
 SELECT org.example.empty.Gisa
+  		 WHERE (certificate.owner == _$param)			
+}
+
+query Get_Searched_All_Gisa {
+description: "Select searched All Gisa"
+statement:
+SELECT org.example.empty.Gisa
+  		 WHERE (certificate.name == _$param)			
 }
 
 query Get_Searched_Gisa {
 description: "Select searched Gisa"
 statement:
 SELECT org.example.empty.Gisa
-  		WHERE (certificate.name == _$param)
-  		SKIP 1
+  		 WHERE (certificate.name == _$param)
+  			LIMIT _$limitnum		
+  				SKIP _$skipnum	
 }
 
 /**
 * Toeic	
 */
 
-query Get_ALL_Toeic {
-description: "Select Toeic"
+query Get_Searched_All_Toeic_Count {
+description: "Select searched All Toeic Count"
 statement:
 SELECT org.example.empty.Toeic
+  		 WHERE ( certificate.owner == _$param)			
+}
+
+query Get_Searched_All_Toeic {
+description: "Select searched All Toeic Count"
+statement:
+SELECT org.example.empty.Toeic
+  		 WHERE (certificate.name == _$param)			
 }
 
 query Get_Searched_Toeic {
 description: "Select searched Toeic"
 statement:
 SELECT org.example.empty.Toeic
-  		WHERE (_$Param == certificate.owner)
+  		 WHERE (certificate.name == _$param)			
+              LIMIT _$limitnum
+                  SKIP _$skipnum
 }
 
 query Get_Expired_Toeic {
@@ -43,18 +63,13 @@ SELECT org.example.empty.Toeic
 * User	
 */
 
-query Get_ALL_User {
-description: "Select User"
-statement:
-SELECT org.example.empty.Employee
-}
-
 query Get_Searched_User {
 description: "Select searched User"
 statement:
 SELECT org.example.empty.Employee
   		WHERE (_$Param == email)
 }
+
 /**
 * Transcation count
 */

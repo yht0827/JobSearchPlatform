@@ -1,5 +1,6 @@
 import React from "react";
 import { Link, withRouter } from "react-router-dom";
+import 'react-notifications/lib/notifications.css';
 import { Container, Card, Image, Grid } from "semantic-ui-react";
 import { mainPage } from "lib/Data";
 import { createGlobalStyle } from "styled-components";

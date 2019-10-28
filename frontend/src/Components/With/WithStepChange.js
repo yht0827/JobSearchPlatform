@@ -32,7 +32,7 @@ const WithStepChange = withStateHandlers(
         ],
     },
     {
-        changeAction: () => value => ({
+        ChangeAction: () => value => ({
             action: value,
         }),
         changeNextStep: ({ steps }) => (current) => ({

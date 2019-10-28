@@ -6,11 +6,13 @@ import { Dropdown, Label, Input, Message } from "semantic-ui-react";
 import styled from "styled-components";
 import { score, graduate } from "lib/Data";
 
-const FirstLabel = ({ children, labelcolor, icolor, subcolor }) => (
+
+
+const FirstLabel = ({ btstate,Reqemail,GetInfos,children, labelcolor, icolor, subcolor }) => (
     <>
         <GridLabel>
             <Label size="big" basic color={labelcolor} pointing="right">이력 요청</Label>
-            <ButtonWithInput btcolor={subcolor} />
+            <ButtonWithInput btstate={btstate} Reqemail={Reqemail} GetInfos={GetInfos} btcolor={subcolor} />
         </GridLabel>
         <GridLabel>
             <Label size="big" basic color={labelcolor} pointing="right">최종 학력</Label>

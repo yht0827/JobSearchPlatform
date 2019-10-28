@@ -1,6 +1,6 @@
 import React from "react";
 import { Input, Divider, Grid } from "semantic-ui-react";
-import { TableForm } from "Components/common/Form";
+import { TableForm,GisaForm } from "Components/common/Form";
 import styled from "styled-components";
 
 const StyledInput = styled(Input)`
@@ -16,21 +16,28 @@ const StyledInput = styled(Input)`
     }
 `;
 
-const Searchform = ({ phColor, borColor, icColor }) => (
+const Searchform = ({type, phColor, borColor, icColor, Action,searchValue,ClickAction,KeyAction,handlePage}) => (
     <>
         <Grid centered>
             <Grid.Row>
                 <StyledInput 
                     phcolor={phColor}
                     borcolor={borColor}
-                    icon={{ name: "search", color: icColor, circular: true, link: true }} 
-                    placeholder="Search..." 
+                    value={searchValue}
+                    icon={{onClick: () => ClickAction(), name: "search", color: icColor, circular: true, link: true }} 
+                    placeholder="Search..."
+                    onChange={Action}
+                    onKeyPress={event => KeyAction(event)}
                     size="large" 
                 />
             </Grid.Row>
             <Divider style={{ backgroundColor: phColor }} />
             <Grid.Row>
-                <TableForm color={icColor} pgcolor={phColor} />
+              {
+                  type === "QNET"?  
+                <GisaForm handlePage={handlePage} color={icColor} pgcolor={phColor}/>
+              :<TableForm handlePage={handlePage} color={icColor} pgcolor={phColor} />
+            }
             </Grid.Row>
         </Grid>
     </>

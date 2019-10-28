@@ -46,17 +46,20 @@ const Inputs = styled.input`
 const InputWithLabel = ({ label, Date, wid, ...rest }) => (
     <Wrapper>
         <Label>{label}</Label>
-        { Date ? <WithDatePicker wid={wid} /> : <Inputs { ...rest } /> }
+        { Date ? <WithDatePicker wid={wid} /> : <Inputs { ...rest } required /> }
     </Wrapper>
 );
 
-const ButtonWithInput = ({ btcolor }) => <StyledBI
+const ButtonWithInput = ({btstate,GetInfos,btcolor,Reqemail }) => <StyledBI
+    disabled={btstate}
     action={{
         color: btcolor, 
         icon: "reply", 
+        onClick:() => Reqemail()
     }} 
     placeholder="Request"
     size="small"
+    onChange={GetInfos}
 />;
 
 export { ButtonWithInput, InputWithLabel };

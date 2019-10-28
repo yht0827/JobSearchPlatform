@@ -23,19 +23,31 @@ const StyledStepGroup = styled(Step.Group)`
     }
 `;
 
-const MenuLabel = ({ dir, changeAction, action, labelcolor, iconname, labeltext }) => (
+const MenuLabel = ({ dir,ChangeAction,action, labelcolor, iconname, labeltext,LogOutAction }) => (
     <>
-        {changeAction
+        {
+            ChangeAction
             ? <Label 
                 size="large" 
-                onClick={() => changeAction(action)} 
+                onClick={()=>ChangeAction(action)} 
                 basic 
                 color={labelcolor} 
                 style={{ cursor: "pointer", userSelect: "none" }}
             >
                 <Icon name={iconname} /> {labeltext} 
             </Label> 
-            : <Label 
+            : (dir === "#"? 
+                <Label 
+                size="large"
+                onClick={() => LogOutAction()} 
+                basic 
+                color={labelcolor} 
+                style={{ cursor: "pointer", userSelect: "none" }}
+                > 
+                <Icon name={iconname} /> {labeltext} 
+            </Label>   
+            :
+                <Label 
                 as={Link}
                 size="large" 
                 to={dir}
@@ -44,7 +56,8 @@ const MenuLabel = ({ dir, changeAction, action, labelcolor, iconname, labeltext 
                 style={{ cursor: "pointer", userSelect: "none" }}
             >
                 <Icon name={iconname} /> {labeltext} 
-            </Label>}   
+            </Label>)
+        }   
     </>
 );
 

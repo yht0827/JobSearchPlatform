@@ -15,9 +15,9 @@ const StyledLink = styled.div`
     }
 `;
 
-const ChangeLink = ({ children, changeAction, action }) => (
+const ChangeLink = ({ children, ChangeAction, action }) => (
     <Aligner>
-        <StyledLink onClick={() => changeAction(action)}>{children}</StyledLink>
+        <StyledLink onClick={() => ChangeAction(action)}>{children}</StyledLink>
     </Aligner>
 );
 

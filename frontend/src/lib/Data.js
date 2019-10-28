@@ -22,7 +22,7 @@ const mainPage = [
         id: "3",
         dir: "/platform",
         img: "platform.png",
-        name: "Search In",
+        name: "Work Korea",
         meta: "구직 플랫폼",
         desc: "구직 정보 제공",
     },

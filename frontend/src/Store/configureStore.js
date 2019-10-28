@@ -1,14 +1,13 @@
-import { createStore, applyMiddleware, compose, combineReducers } from "redux";
-import penderMiddleware from "redux-pender";
-import * as modules from "Store/modules";
+import { createStore, applyMiddleware, compose } from "redux";
+import { createLogger } from "redux-logger";
+import ReduxThunk from "redux-thunk";
+import rootReducer from "Store/modules";
 
-const reducers = combineReducers(modules);
-const middlewares = [penderMiddleware()];
-
-const isDev = process.env.NODE_ENV === "development";
-const devtools = isDev && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__;    
+const logger = createLogger();
+const middlewares = [logger,ReduxThunk];
+const devtools = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__;    
 const composeEnhancers = devtools || compose;
 
-const configure = () => createStore(reducers, composeEnhancers(applyMiddleware(...middlewares))); 
+const configure = () => createStore(rootReducer,composeEnhancers(applyMiddleware(...middlewares))); 
 
 export default configure;

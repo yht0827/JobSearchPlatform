@@ -15,11 +15,11 @@
 namespace org.example.empty
 
 event TransEvent {
+  
 }
 
 enum CertificateState {
-o INIT // (자격증 초기등록 매칭 x)
-o MATCHED // (회원과 자격증이 매칭했을 시)
+o NOTMATCHED // (자격증 초기등록 매칭 x)
 o EXPIRED // (토익 만료)
 o APPROVED // (기업 요청 가능)
 o REJECTED // (기업 요청 거부)
@@ -27,21 +27,21 @@ o REJECTED // (기업 요청 거부)
 
 concept Certificate{
 o DateTime passDate // (취득일자)
-o CertificateState state default="INIT" // (상태정보)
+o CertificateState state default="NOTMATCHED" // (상태정보)
 o String name
 --> PlatForm include
 --> Employee owner
 }
 
 asset Toeic identified by toeicId {
-o String toeicId // (자격번호)
-o Double totalScore // (토익점수)
+o String toeicId // (자격고유번호)
+o Integer totalScore // (토익점수)
 o DateTime validUntil // (유효기간)
 o Certificate certificate
 }
 
 asset Gisa identified by gId {
-o String gId // (자격번호)
+o String gId // (자격고유번호)
 o String registName // (자격종목)
 o Certificate certificate
 }
@@ -55,6 +55,7 @@ o String email // (플랫폼 ID)
 o String password
 o String name
 o DateTime birth // (생년월일)
+o String[] comReq
 o String active default="unAuth" // 이메일 인증 하지 않은 초기 상태
 --> PlatForm platform
 }
@@ -71,37 +72,66 @@ participant PlatForm extends Institution{}
 */
 
 transaction SignUp { // (구직자 등록)
-o Employee employee
---> PlatForm platform // platform id
+o String email
+o String password
+o String name
+o DateTime birth
 }
 
+@returns(Employee)
 transaction SignIn { // (플랫폼 로그인)
 o String email // (플랫폼 ID)
 o String password
---> Employee employee
 }
 
 transaction ToeicRegister { // (토익 점수 등록)
-o Toeic toeic // (토익)
+o String toeicId 
+o Integer totalScore
+o DateTime passDate
+o String email
+o String name 
 }
 
-transaction ToeicSearch { // (토익 점수 조회)
-o String name
-}
-
-transaction ToeicExpired{ // (토익 만료)
+transaction ToeicExpired{ // (토익 만료)  
 }
   
 transaction GisaRegister{ // (기사 정보 등록)
-o Gisa gisa // (기사)
+o String gId
+o String registName
+o DateTime passDate
+o String email
+o String name   
 }
 
-transaction GisaSearch{ // (기사 정보 조회)
-o String name
---> Gisa gisa
-}
-
+@returns(String[])
 transaction RequsetInfo{ // (기업 요청 처리)
 o String email
---> Employee employee
+}
+  
+transaction UpdateCompanyCount{ // (기업 요청 횟수 업데이트)
+o String companyName
+o String email
+}
+
+transaction ChangeGisaState{
+o String email 
+}
+
+transaction ChangeToeicState{
+o String email 
+} 
+  
+transaction Setting{
+}
+
+@returns(Toeic[])
+transaction ToeicGet{
+o String name
+o Integer skipnum
+}
+  
+@returns(Gisa[])
+transaction GisaGet{
+o String name
+o Integer skipnum
 }
